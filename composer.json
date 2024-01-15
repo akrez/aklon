@@ -1,0 +1,42 @@
+{
+    "require": {
+        "symfony/var-dumper": "*",
+        "react/http": "*",
+        "react/socket": "*",
+        "guzzlehttp/guzzle": "*",
+        "guzzlehttp/psr7": "*",
+        "workerman/psr7": "*",
+        "workerman/workerman": "*",
+        "athlon1600/php-proxy": "*",
+        "athlon1600/php-proxy-plugin-bundle": "*",
+        "amphp/websocket-server": "*",
+        "amphp/http-server": "*",
+        "amphp/amp": "*",
+        "amphp/byte-stream": "*",
+        "amphp/cache": "*",
+        "amphp/hpack": "*",
+        "amphp/http": "*",
+        "amphp/pipeline": "*",
+        "amphp/socket": "*",
+        "amphp/sync": "*",
+        "amphp/websocket": "*",
+        "psr/log": "*",
+        "revolt/event-loop": "*",
+        "amphp/http-client": "*",
+        "amphp/http-server-static-content": "*",
+        "amphp/http-server-router": "*",
+        "amphp/log": "*",
+        "amphp/php-cs-fixer-config": "*",
+        "amphp/phpunit-util": "*",
+        "amphp/websocket-client": "*",
+        "league/climate": "*",
+        "phpunit/phpunit": "*",
+        "psalm/phar": "*",
+        "colinodell/psr-testlogger": "*"
+    },
+    "config": {
+        "platform": {
+            "php": "8.0.0"
+        }
+    }
+}
