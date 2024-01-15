@@ -17,12 +17,12 @@ class Crypt
         return $result;
     }
 
-    private static function base64UrlEncode($input)
+    public static function base64UrlEncode($input)
     {
         return rtrim(strtr(base64_encode($input), '+/', '-_'), '=');
     }
 
-    private static function base64UrlDecode($input)
+    public static function base64UrlDecode($input)
     {
         return base64_decode(str_pad(strtr($input, '-_', '+/'), strlen($input) % 4, '=', STR_PAD_RIGHT));
     }

@@ -4,7 +4,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\ServerRequest;
 use GuzzleHttp\Psr7\Uri;
 
-require('../vendor/autoload.php');
+require('./vendor/autoload.php');
 require('./Aklon.php');
 
 $baseHost = 'localhost/filter/aklon';
@@ -34,6 +34,9 @@ try {
     $response = $e->getResponse();
 }
 
+$response = $response
+    ->withoutHeader('Transfer-Encoding')
+    ->withoutHeader('Connection');
 foreach ($response->getHeaders() as $headerKey => $headers) {
     header($headerKey . ':' . implode(',', $headers));
 }
@@ -43,9 +46,9 @@ $body = $response->getBody();
 $cleanContentType = Aklon::getCleanContentType(implode(',', $response->getHeader('content-type')));
 
 if ('text/html' == $cleanContentType) {
-    echo Aklon::convertHtml($body, $baseHost, $fakeUrl, $realUrl);
+    echo Aklon::convertHtml($body->getContents(), $baseHost, $fakeUrl, $realUrl);
 } elseif ('text/css' == $cleanContentType) {
-    echo Aklon::convertCss($body, $baseHost, $fakeUrl, $realUrl);
+    echo Aklon::convertCss($body->getContents(), $baseHost, $fakeUrl, $realUrl);
 } else {
     while (!$body->eof()) {
         echo $body->read(512);

@@ -1,7 +1,11 @@
 <?php
 
+require('./Crypt.php');
+
 class Aklon
 {
+    public static $key = 'z123456789Z';
+
     public static function getCleanContentType($contentType)
     {
         return trim(preg_replace('@;.*@', '', $contentType));
@@ -9,17 +13,17 @@ class Aklon
 
     public static function encrypt($plaintext)
     {
-        return base64_encode($plaintext);
+        return Crypt::urlEncrypt($plaintext, static::$key);
     }
 
     public static function decrypt($data)
     {
-        return base64_decode($data);
+        return Crypt::urlDecrypt($data, static::$key);
     }
 
     public static function isBase64Encode($data)
     {
-        return !!(base64_encode(base64_decode($data, true)) === $data);
+        return !!(Crypt::base64UrlEncode(Crypt::base64UrlDecode($data)) === $data);
     }
 
     public static function startsWith($haystack, $needles)
