@@ -11,16 +11,6 @@ class Aklon
         return trim(preg_replace('@;.*@', '', $contentType));
     }
 
-    public static function encrypt($plaintext)
-    {
-        return Crypt::urlEncrypt($plaintext, static::$key);
-    }
-
-    public static function decrypt($data)
-    {
-        return Crypt::urlDecrypt($data, static::$key);
-    }
-
     public static function isBase64Encode($data)
     {
         return !!(Crypt::base64UrlEncode(Crypt::base64UrlDecode($data)) === $data);
@@ -183,9 +173,9 @@ class Aklon
         }
         $parsedCurrent = static::parseUrl($current);
         return static::unparseUrl([
-            'scheme' => 'http',
+            'scheme' => 'https',
             'host' => $baseHost,
-            'query' => 'q=' . static::encrypt(static::unparseUrl($parsedCurrent)),
+            'query' => 'q=' . Crypt::urlEncrypt(static::unparseUrl($parsedCurrent), static::$key),
         ]);
     }
 
@@ -197,7 +187,7 @@ class Aklon
 
         if (
             static::isBase64Encode($url) and
-            $encryptedUrl = static::decrypt($url)
+            $encryptedUrl = Crypt::urlDecrypt($url, static::$key)
         ) {
             $url = $encryptedUrl;
         }
