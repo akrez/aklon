@@ -2,6 +2,8 @@
 
 class Crypt
 {
+    public static $key = 'z123456789Z';
+
     private static function strRotPass($str, $key, $decrypt = false)
     {
         $length = strlen($key);
@@ -27,15 +29,15 @@ class Crypt
         return base64_decode(str_pad(strtr($input, '-_', '+/'), strlen($input) % 4, '=', STR_PAD_RIGHT));
     }
 
-    public static function urlEncrypt($url, $key)
+    public static function urlEncrypt($url)
     {
-        $url = static::strRotPass($url, $key);
+        $url = static::strRotPass($url, static::$key);
         return static::base64UrlEncode($url);
     }
 
-    public static function urlDecrypt($url, $key)
+    public static function urlDecrypt($url)
     {
         $url = static::base64UrlDecode($url);
-        return static::strRotPass($url, $key, true);
+        return static::strRotPass($url, static::$key, true);
     }
 }
