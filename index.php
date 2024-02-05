@@ -3,17 +3,18 @@
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\ServerRequest;
 use GuzzleHttp\Psr7\Uri;
+use Src\Aklon;
+use Src\Cookie;
 
-if (true) {
-    require('../vendor/autoload.php');
+if (false) {
+    require_once('../vendor/autoload.php');
     $baseSchema = 'https';
     $baseHost = 'aklon.akrezing.ir';
 } else {
-    require('./vendor/autoload.php');
+    require_once('./vendor/autoload.php');
     $baseSchema = 'http';
     $baseHost = 'localhost/filter/aklon';
 }
-require('./Aklon.php');
 
 if (isset($_GET['url'])) {
     $url = Aklon::encryptUrl($_GET['url'], $baseHost, $baseSchema);
@@ -28,6 +29,8 @@ if (
     $realUrl = Aklon::decryptUrl($q, $baseHost);
 
     $request = ServerRequest::fromGlobals()->withUri(new Uri($realUrl));
+
+    Cookie::onBeforeRequest($request);
 
     $client = new Client([
         'curl' => [
@@ -47,6 +50,8 @@ if (
     } catch (GuzzleHttp\Exception\ClientException $e) {
         $response = $e->getResponse();
     }
+
+    Cookie::onHeadersReceived($request, $response);
 
     $response = $response
         ->withoutHeader('Transfer-Encoding')
@@ -70,5 +75,5 @@ if (
         }
     }
 } else {
-    require('./PageTemplate.php');
+    require('./form.php');
 }
