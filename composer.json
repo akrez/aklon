@@ -10,6 +10,11 @@
         "athlon1600/php-proxy": "*",
         "athlon1600/php-proxy-plugin-bundle": "*"
     },
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src"
+        }
+    },
     "config": {
         "platform": {
             "php": "8.0.0"
